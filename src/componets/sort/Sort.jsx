@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setSort } from "../../redux/slices/filterSlice";
 
@@ -13,7 +13,8 @@ export const sortList = [
 
 export const Sort = () => {
   const dispatch = useDispatch();
-  const sort = useSelector(state => state.filter.sort)
+  const sort = useSelector(state => state.filter.sort);
+  const sortRef = useRef();
 
   const [openPopap, setOpenPopap] = useState(false);
 
@@ -28,8 +29,22 @@ export const Sort = () => {
 
   const sortLabelClazz = openPopap ? 'sort__label open' : 'sort__label';
 
+  // Закрьіваем попап по клику вне области
+  useEffect(() => {
+    const handlerClickOutsite = (e) => {
+      if(!e.composedPath().includes(sortRef.current)) {
+        setOpenPopap(false);
+        console.log('outsite');
+      }
+    }
+
+    document.body.addEventListener('click', handlerClickOutsite);
+
+    return () => document.body.removeEventListener('click', handlerClickOutsite);
+  }, []);
+
   return (
-    <div className="sort">
+    <div className="sort" ref={sortRef}>
       <div className={sortLabelClazz}>
         <svg
           width="10"

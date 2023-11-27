@@ -40,13 +40,6 @@ const Home = () => {
     const orderSort = sort.sortProperty.includes("-") ? "asc" : "desc";
     const search = searchValue ? `&search=${searchValue}` : "";
 
-    // fetch(`https://654f76e5358230d8f0cd58cf.mockapi.io/items?page=${currentPage}&limit=4&${valueId}&sortBy=${sortBy}&order=${orderSort}${search}`)
-    // .then(res => res.json())
-    // .then(data => {
-    //   setItems(data);
-    //   setIsLoading(false);
-    // })
-
     axios
       .get(
         `https://654f76e5358230d8f0cd58cf.mockapi.io/items?page=${currentPage}&limit=4&${valueId}&sortBy=${sortBy}&order=${orderSort}${search}`
@@ -75,7 +68,6 @@ const Home = () => {
   useEffect(() => {
     if(window.location.search) {
       const params = qs.parse(window.location.search.substring(1));
-      console.log(params);
 
       const sort = sortList.find(obj => obj.sortProperty === params.sortProperty);
 
