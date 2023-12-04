@@ -3,6 +3,7 @@
 .button {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   column-gap: 5px;
   background-color: $orange;
   border-radius: 30px;

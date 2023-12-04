@@ -34,7 +34,6 @@ export const Sort = () => {
     const handlerClickOutsite = (e) => {
       if(!e.composedPath().includes(sortRef.current)) {
         setOpenPopap(false);
-        console.log('outsite');
       }
     }
 
