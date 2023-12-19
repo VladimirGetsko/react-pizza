@@ -1,7 +1,7 @@
-import { useState, useEffect, useContext, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import qs from 'qs';
 import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 import { selectFilter, setCategoryId, setCurrentPage, setFilters } from '../redux/slices/filterSlice';
 import Categories from '../componets/categories/Categories';
@@ -85,7 +85,13 @@ const Home = () => {
 
   const renderSkeletons = [...new Array(4)].map((_, index) => <Skeleton key={index} />);
   // const filteredProducts = items.filter(item => item.title.toLowerCase().includes(searchValue.toLowerCase()));
-  const renderProducts = items.map(item => <PizzaBlock key={item.id} {...item} />);
+  const renderProducts = items.map(item => {
+    return (
+      <Link to={`/pizza/${item.id}`} key={item.id} className='pizza-block'>
+        <PizzaBlock {...item} />
+      </Link>
+    )
+  });
 
   return (
     <div className="container">
