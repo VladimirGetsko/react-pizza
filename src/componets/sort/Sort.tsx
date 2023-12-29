@@ -2,7 +2,12 @@ import { useEffect, useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { selectSort, setSort } from "../../redux/slices/filterSlice";
 
-export const sortList = [
+type SortItem = {
+  name: string;
+  sortProperty: string;
+};
+
+export const sortList: SortItem[] = [
   {name: 'популярности (desc)', sortProperty: 'rating' },
   {name: 'популярности (asc)', sortProperty: '-rating' },
   {name: 'цене (desc)', sortProperty: 'price'},
@@ -11,14 +16,14 @@ export const sortList = [
   {name: 'алфавиту (asc)', sortProperty: '-title'},
 ];
 
-export const Sort = () => {
+export const Sort: React.FC = () => {
   const dispatch = useDispatch();
   const sort = useSelector(selectSort);
-  const sortRef = useRef();
+  const sortRef = useRef<HTMLDivElement>(null);
 
   const [openPopap, setOpenPopap] = useState(false);
 
-  const filterSelectionHandler = (obj) => {
+  const filterSelectionHandler = (obj: SortItem) => {
     dispatch(setSort(obj));
     setOpenPopap(false);
   }
@@ -31,7 +36,7 @@ export const Sort = () => {
 
   // Закрьіваем попап по клику вне области
   useEffect(() => {
-    const handlerClickOutsite = (e) => {
+    const handlerClickOutsite = (e: any) => {
       if(!e.composedPath().includes(sortRef.current)) {
         setOpenPopap(false);
       }

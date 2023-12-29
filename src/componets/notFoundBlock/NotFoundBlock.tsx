@@ -1,6 +1,6 @@
 import styles from "./notFoundBlock.module.scss";
 
-const NotFoundBlock = () => {
+const NotFoundBlock: React.FC = () => {
   return (
     <h1 className={styles.textCenter}>
       <span>😕</span>

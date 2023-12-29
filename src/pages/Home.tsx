@@ -12,7 +12,7 @@ import Pagination from '../componets/pagination/Pagination';
 
 import { fetchPizzas, selectPizzaData } from '../redux/slices/pizzaSlice';
 
-const Home = () => {
+const Home: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const isSearch = useRef(false);
@@ -21,12 +21,12 @@ const Home = () => {
   const { items, status } = useSelector(selectPizzaData);
   const {categotyId, sort, currentPage, searchValue} = useSelector(selectFilter);
 
-  const categoryHandler = (id) =>{
+  const categoryHandler = (id: number) =>{
     dispatch(setCategoryId(id));
   }
 
-  const onChangePage = number => {
-    dispatch(setCurrentPage(number))
+  const onChangePage = (page: number) => {
+    dispatch(setCurrentPage(page))
   };
 
   const getPizzas = async () => {
@@ -35,12 +35,14 @@ const Home = () => {
     const categoty = categotyId > 0 ? `category=${categotyId}` : "";
     const search = searchValue ? `&search=${searchValue}` : "";
 
-    dispatch(fetchPizzas({
-      sortBy,
-      orderSort,
-      categoty,
-      search,
-      currentPage
+    dispatch(
+      // @ts-ignore
+      fetchPizzas({
+        sortBy,
+        orderSort,
+        categoty,
+        search,
+        currentPage
     }));
 
     window.scrollTo(0,0);
@@ -85,7 +87,7 @@ const Home = () => {
 
   const renderSkeletons = [...new Array(4)].map((_, index) => <Skeleton key={index} />);
   // const filteredProducts = items.filter(item => item.title.toLowerCase().includes(searchValue.toLowerCase()));
-  const renderProducts = items.map(item => {
+  const renderProducts = items.map((item: any) => {
     return (
       <Link to={`/pizza/${item.id}`} key={item.id} className='pizza-block'>
         <PizzaBlock {...item} />

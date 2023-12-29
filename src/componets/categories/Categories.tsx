@@ -1,4 +1,9 @@
-const Categories = ({ value, categoryHandler }) => {
+type CategoriesProps = {
+  value: number;
+  categoryHandler: any;
+};
+
+const Categories: React.FC<CategoriesProps> = ({ value, categoryHandler }) => {
   const categories = [
     'Все', 
     'Мясные',
