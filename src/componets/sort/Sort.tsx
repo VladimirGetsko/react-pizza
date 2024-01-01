@@ -1,10 +1,14 @@
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { selectSort, setSort } from "../../redux/slices/filterSlice";
 
 type SortItem = {
   name: string;
   sortProperty: string;
+};
+
+type PopapClick = MouseEvent & {
+  path: Node[];
 };
 
 export const sortList: SortItem[] = [
@@ -36,8 +40,10 @@ export const Sort: React.FC = () => {
 
   // Закрьіваем попап по клику вне области
   useEffect(() => {
-    const handlerClickOutsite = (e: any) => {
-      if(!e.composedPath().includes(sortRef.current)) {
+    const handlerClickOutsite = (event: MouseEvent) => {
+      const _event = event as PopapClick;
+
+      if(sortRef.current && !_event.composedPath().includes(sortRef.current)) {
         setOpenPopap(false);
       }
     }
