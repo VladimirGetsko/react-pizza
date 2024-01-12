@@ -1,16 +1,16 @@
-import { useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import qs from 'qs';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import { selectFilter, setCategoryId, setCurrentPage, setFilters } from '../redux/slices/filterSlice';
 import Categories from '../componets/categories/Categories';
-import { Sort, sortList } from '../componets/sort/Sort';
+import { SortPopup } from '../componets/sort/Sort';
 import PizzaBlock from '../componets/pizzaBlock/PizzaBlock';
 import Skeleton from '../componets/skeleton/Skeleton';
 import Pagination from '../componets/pagination/Pagination';
 
-import { SearchPizzaParams, fetchPizzas, selectPizzaData } from '../redux/slices/pizzaSlice';
+import { fetchPizzas, selectPizzaData } from '../redux/slices/pizzaSlice';
 import { useAppDispatch } from '../redux/store';
 
 const Home: React.FC = () => {
@@ -22,9 +22,9 @@ const Home: React.FC = () => {
   const { items, status } = useSelector(selectPizzaData);
   const {categotyId, sort, currentPage, searchValue} = useSelector(selectFilter);
 
-  const categoryHandler = (id: number) =>{
+  const categoryHandler = useCallback((id: number) =>{
     dispatch(setCategoryId(id));
-  }
+  }, [])
 
   const onChangePage = (page: number) => {
     dispatch(setCurrentPage(page));
@@ -93,7 +93,10 @@ const Home: React.FC = () => {
   // const filteredProducts = items.filter(item => item.title.toLowerCase().includes(searchValue.toLowerCase()));
   const renderProducts = items.map((item: any) => {
     return (
-      <PizzaBlock {...item} />
+      <PizzaBlock
+        key={item.id}
+        {...item}
+       />
     )
   });
 
@@ -104,7 +107,7 @@ const Home: React.FC = () => {
           value={categotyId} 
           categoryHandler={categoryHandler} 
         />
-        <Sort />
+        <SortPopup value={sort} />
       </div>
       <h2 className="content__title">Все пиццы</h2>
       {

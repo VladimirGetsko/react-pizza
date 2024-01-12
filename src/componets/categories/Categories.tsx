@@ -1,3 +1,5 @@
+import { memo } from 'react';
+
 type CategoriesProps = {
   value: number;
   categoryHandler: (i: number) => void;
@@ -12,7 +14,7 @@ const categories = [
   'Закрытые',
 ]
 
-const Categories: React.FC<CategoriesProps> = ({ value, categoryHandler }) => {
+const Categories: React.FC<CategoriesProps> = memo(({ value, categoryHandler }) => {
   return (
     <div className="categories">
       <ul className="categories__list">
@@ -34,6 +36,6 @@ const Categories: React.FC<CategoriesProps> = ({ value, categoryHandler }) => {
       </ul>
     </div>
   )
-}
+})
 
 export default Categories;
